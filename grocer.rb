@@ -64,5 +64,17 @@ def apply_clearance(cart)
 end
 
 def checkout(cart, coupons)
+  applied_coupon = apply_coupons(consolidate_cart(cart), coupons)
+  clearanced_cart = apply_clearance(applied_coupon)
   
+  grand_total = 0
+  clearanced_cart.map do |item|
+    grand_total += item[:price] * item[:count]
+  end
+
+  if grand_total > 100
+    return grand_total - (grand_total * 0.1)
+  else
+    return grand_total
+  end
 end
