@@ -1,20 +1,41 @@
 def find_item_by_name_in_collection(name, collection)
-  # Implement me first!
-  #
-  # Consult README for inputs and outputs
+  result = nil
+  collection.map do |elem|
+    if elem[:item] == name
+      result = elem
+    end
+  end
+  result
 end
 
 def consolidate_cart(cart)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This returns a new Array that represents the cart. Don't merely
-  # change `cart` (i.e. mutate) it. It's easier to return a new thing.
+  new_hash = {}
+  cart.map do |elem|
+    if !new_hash[elem[:item]]
+      new_hash[elem[:item]] = {
+        :price => elem[:price],
+        :clearance => elem[:clearance],
+        :count => 1
+      }
+    elsif new_hash[elem[:item]]
+      new_hash[elem[:item]][:count] += 1
+    end
+  end
+  
+  arr = []
+  new_hash.each do |k, v|
+    arr.push({
+      :item => k,
+      :price => v[:price],
+      :clearance => v[:clearance],
+      :count => v[:count]
+    })
+  end
+  arr
 end
 
 def apply_coupons(cart, coupons)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+  
 end
 
 def apply_clearance(cart)
